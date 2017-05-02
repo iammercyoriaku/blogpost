@@ -398,6 +398,17 @@ public static function trending($dbconn, $cb){
 
   }
 
+  public static function title($dbconn, $cb){
+
+        $title = "Title";
+        $stmt = $dbconn->prepare("SELECT * FROM post WHERE title = :ti");
+
+        $stmt->bindParam(':ti', $title);
+        $stmt->execute();
+
+        $cb($stmt);
+
+
 
   }
 

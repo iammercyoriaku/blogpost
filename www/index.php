@@ -1,12 +1,14 @@
 <?php
 
+    session_start();
+
   $title = "Blog Post";
 
   include 'includes/header.php';
 
   include 'includes/db.php';
 
-
+$id = $_SESSION['admin_id'];
 
  ?>
 
@@ -27,7 +29,12 @@
 
     <div class="blog-header">
       <div class="container">
-        <h1 class="blog-title">The Bootstrap Blog</h1>
+        <?php
+
+            Utils::title($conn, function($data){
+
+         ?>
+        <h1 class="blog-title"><?php echo $data['title']; ?></h1>
         <p class="lead blog-description">An example blog template built with Bootstrap.</p>
       </div>
     </div>
