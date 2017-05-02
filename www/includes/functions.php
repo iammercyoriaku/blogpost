@@ -343,8 +343,61 @@ public static function topSelling($dbconn, $cb){
 }
 
 public static function trending($dbconn, $cb){
-  
-}
+
+      $trending = "Trending";
+      $stmt = $dbconn->prepare("SELECT * FROM books WHERE flag = :flg");
+
+      $stmt->bindParam(':flg', $trending);
+      $stmt->execute();
+
+      $cb($stmt);
+  }
+
+  public static function recentlyViewed($dbconn, $bid, $uid){
+
+              $stmt = $dbconn->prepare("SELECT * FROM recently_viewed WHERE book_id = :bi AND user_id = :ui");
+              $stmt->bindParam(':bi', $bid);
+              $stmt->bindParam(':ui', $uid);
+
+              $stmt->execute();
+
+  }
+
+  public static function addPost($dbconn, $input, $adminID){
+
+      $stmt = $dbconn->prepare("INSERT INTO post(admin_id, title, header, sub_header, post, date) VALUES(:ai, :t, :h, :sub, :p, now())");
+      $data = [
+                  ':ai' => $adminID,
+                  ':t' => $input['title'],
+                  ':h' => $input['header'],
+                  ':sub' => $input['sub_header'],
+                  ':p' => $input['post'],
+
+      ];
+
+      $stmt->execute($data);
+  }
+
+  public static function viewPost($dbconn){
+
+    $result = "";
+
+    $stmt = $dbconn->prepare("SELECT * FROM post");
+
+    $stmt->execute();
+
+    while($row = $stmt->fetch(PDO::FETCH_BOTH)){
+      $result .='<tr><td>'.$row[1].'</td><td>'.$row[2].'</td><td>'.$row[3].'</td><td>'
+      .$row[4].'</td><td>'.$row[5].'</td><td>'.$row[6].'</td>
+      <td><a href="editpost.php?bid='.$row[0].'">edit</a></td></td>
+      <td><a href="deletepost.php?bid='.$row[0].'">delete</a></td></tr>';
+
+    }
+
+      return $result;
+
+  }
+
 
   }
 
