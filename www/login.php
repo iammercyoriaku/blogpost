@@ -38,19 +38,6 @@ if(array_key_exists('register', $_POST)){
 
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Register</title>
-	<link rel="stylesheet" type="text/css" href="styles/styles.css">
-</head>
-<body>
-	<section>
-		<div class="mast">
-			<h1>T<span>SSB</span></h1>
-		</div>
-	</section>
-
 	<div class="wrapper">
 		<h1 id="register-label">Admin Login</h1>
 		<hr>
